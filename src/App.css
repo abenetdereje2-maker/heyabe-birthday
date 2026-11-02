@@ -1,0 +1,2037 @@
+
+/* =========================================
+   BIRTHDAY INTRO SCREEN
+========================================= */
+
+.intro-screen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 16px;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, #fbcfe8 0%, transparent 35%),
+    radial-gradient(circle at 80% 80%, #ddd6fe 0%, transparent 35%),
+    linear-gradient(135deg, #fff1f8, #fce7f3, #f5eaff);
+}
+
+.intro-content {
+  width: min(100%, 480px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  animation: introAppear 1s ease both;
+}
+
+.intro-sparkle {
+  color: #d94691;
+  margin-bottom: 22px;
+  animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+.intro-subtitle {
+  color: #be4b83;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+}
+
+.intro-content h1 {
+  color: #831843;
+  font-size: clamp(38px, 8vw, 58px);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.intro-description {
+  max-width: 360px;
+  color: #986080;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 35px;
+}
+
+/* Envelope */
+
+.envelope {
+  position: relative;
+  width: 150px;
+  height: 115px;
+  margin: 15px auto 35px;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(190, 24, 93, 0.25);
+  z-index: 2;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-top: 65px solid #f9a8d4;
+  transform-origin: top;
+  z-index: 4;
+  transition: transform 0.7s ease;
+}
+
+.envelope-letter {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #be185d;
+  background: white;
+  border-radius: 8px;
+  z-index: 1;
+  transition: transform 0.7s ease;
+}
+
+.envelope-open .envelope-flap {
+  transform: rotateX(180deg);
+}
+
+.envelope-open .envelope-letter {
+  transform: translateY(-75px);
+}
+
+/* Open button */
+
+.open-surprise-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 28px;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  background: linear-gradient(135deg, #ec4899, #9333ea);
+  box-shadow: 0 10px 25px rgba(190, 24, 93, 0.25);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.open-surprise-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(190, 24, 93, 0.35);
+}
+
+.open-surprise-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.intro-footer {
+  color: #a45d89;
+  font-size: 13px;
+  margin-top: 35px;
+}
+
+/* Animations */
+
+@keyframes introAppear {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(10deg);
+  }
+}
+
+.intro-exit {
+  animation: introDisappear 1.2s ease forwards;
+}
+
+@keyframes introDisappear {
+  to {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(8px);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .intro-subtitle {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+  }
+
+  .intro-description {
+    font-size: 14px;
+    padding: 0 15px;
+  }
+
+  .envelope {
+    transform: scale(0.9);
+  }
+
+  .open-surprise-btn {
+    padding: 14px 24px;
+  }
+}
+
+/* Main 3D orbit scene */
+.orbit-scene {
+  position: relative;
+  width: min(440px, 90vw, 42vh);
+  height: min(440px, 90vw, 42vh);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* Mobile orbit scene */
+@media (max-width: 600px) {
+  .orbit-scene {
+    width: min(350px, 94vw, 43vh);
+    height: min(350px, 94vw, 43vh);
+  }
+}
+/* FIX ORBIT VISIBILITY */
+
+.orbit-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.orbit-rotating {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  overflow: visible;
+}
+
+.orbit-item {
+  position: absolute;
+  z-index: 11;
+  width: 110px;
+  min-height: 105px;
+}
+
+.orbit-action {
+  position: relative;
+  z-index: 12;
+  display: flex;
+  width: 110px;
+  min-height: 105px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.orbit-center {
+  position: relative;
+  z-index: 5;
+}
+
+/* =========================================
+   3D BIRTHDAY ORBIT HOMEPAGE
+========================================= */
+
+.orbit-home {
+  position: relative;
+  min-height: 220vh;
+  width: 100%;
+  background:
+    radial-gradient(circle at center, #fff0f8, transparent 55%),
+    linear-gradient(135deg, #fce7f3, #f3e8ff, #fff5fa);
+}
+
+.orbit-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+/* Heading */
+
+.orbit-heading {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.orbit-heading svg {
+  color: #d94691;
+  margin-bottom: 8px;
+}
+
+.orbit-heading p {
+  color: #bd4b80;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.orbit-heading h1 {
+  color: #831843;
+  font-size: clamp(25px, 4vw, 42px);
+  margin-bottom: 8px;
+}
+
+.orbit-heading span {
+  color: #986080;
+  font-size: 14px;
+}
+
+/* Orbit scene */
+
+.orbit-scene {
+  position: relative;
+  width: min(440px, 90vw);
+  height: min(440px, 90vw);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  isolation: isolate;
+  overflow: visible;
+}
+
+/* Rings */
+
+.orbit-ring {
+  position: absolute;
+  border: 1px solid rgba(205, 89, 166, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orbit-ring-one {
+  width: 78%;
+  height: 78%;
+  transform: rotateX(60deg);
+}
+
+.orbit-ring-two {
+  width: 100%;
+  height: 100%;
+  border-style: dashed;
+  transform: rotateX(60deg) rotateZ(-15deg);
+}
+
+/* Rotating container */
+
+.orbit-rotating {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+}
+
+/* Individual orbit items */
+
+.orbit-item {
+  position: absolute;
+  width: 115px;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+}
+
+/* Four positions */
+
+.orbit-letter {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -15%);
+}
+
+.orbit-music {
+  top: 50%;
+  right: 0;
+  transform: translate(15%, -50%);
+}
+
+.orbit-memories {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 15%);
+}
+
+.orbit-wishes {
+  top: 50%;
+  left: 0;
+  transform: translate(-15%, -50%);
+}
+
+/* Clickable items */
+
+.orbit-action {
+  width: 115px;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: #853c70;
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.orbit-counter-rotation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Icon circles */
+
+.orbit-icon {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 22px;
+  color: white;
+  background: linear-gradient(135deg, #ed65b6, #a84de4);
+  box-shadow: 0 12px 30px rgba(177, 72, 155, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.orbit-action:hover .orbit-icon {
+  transform: scale(1.15);
+}
+
+.orbit-action span {
+  display: block;
+  width: 120px;
+  color: #79365c;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Center photo */
+
+.orbit-center {
+  position: relative;
+  z-index: 5;
+  width: 190px;
+  height: 190px;
+  flex-shrink: 0;
+}
+
+.orbit-photo-frame {
+  width: 100%;
+  height: 100%;
+  padding: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f472b6, #a855f7, #f9a8d4);
+  box-shadow:
+    0 0 30px rgba(217, 70, 145, 0.4),
+    0 20px 50px rgba(139, 58, 130, 0.2);
+  animation: photoFloat 4s ease-in-out infinite;
+}
+
+.orbit-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border: 4px solid white;
+  border-radius: 50%;
+}
+
+.orbit-center-heart {
+  position: absolute;
+  right: 5px;
+  bottom: 12px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: linear-gradient(135deg, #f472b6, #d94691);
+  border: 3px solid white;
+  border-radius: 50%;
+}
+
+@keyframes photoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+/* Scroll hint */
+
+.orbit-scroll-hint {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-top: 25px;
+  color: #a45d89;
+}
+
+.orbit-scroll-hint span {
+  font-size: 24px;
+  animation: scrollBounce 1.5s infinite;
+}
+
+.orbit-scroll-hint p {
+  font-size: 12px;
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+  .orbit-stage {
+    min-height: 560px;
+    padding: 12px;
+  }
+
+  .orbit-heading {
+    margin-bottom: 15px;
+  }
+
+  .orbit-heading p {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .orbit-heading span {
+    font-size: 12px;
+  }
+
+  .orbit-scene {
+    width: min(350px, 94vw);
+    height: min(350px, 94vw);
+  }
+
+  .orbit-center {
+    width: 145px;
+    height: 145px;
+  }
+
+  .orbit-item,
+  .orbit-action {
+    width: 90px;
+    height: 90px;
+  }
+
+  .orbit-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 17px;
+  }
+
+  .orbit-action span {
+    width: 95px;
+    font-size: 10px;
+    white-space: normal;
+  }
+
+  .orbit-scroll-hint {
+    margin-top: 15px;
+  }
+}
+
+/* =========================================
+   BEAUTIFUL BIRTHDAY LETTER PAGE
+========================================= */
+
+.letter-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 20%, #fbcfe8, transparent 30%),
+    radial-gradient(circle at 90% 80%, #ddd6fe, transparent 30%),
+    linear-gradient(135deg, #fff1f8, #fce7f3, #f5eaff);
+}
+
+.letter-container {
+  width: 100%;
+  max-width: 780px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Back button */
+
+.letter-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 10px 17px;
+  border-radius: 30px;
+  color: #93336f;
+  background: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.letter-back:hover {
+  transform: translateX(-5px);
+  background: white;
+}
+
+/* Letter card */
+
+.letter-card {
+  position: relative;
+  width: 100%;
+  padding: 55px 65px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 25px 70px rgba(142, 57, 115, 0.13);
+  backdrop-filter: blur(15px);
+  animation: letterAppear 0.8s ease both;
+}
+
+/* Top icon */
+
+.letter-top-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  box-shadow: 0 10px 25px rgba(217, 70, 145, 0.25);
+}
+
+/* Heading */
+
+.letter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #d94691;
+  margin-bottom: 15px;
+}
+
+.letter-heading span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.letter-card > h1 {
+  color: #831843;
+  text-align: center;
+  font-size: clamp(25px, 4vw, 36px);
+  margin-bottom: 22px;
+}
+
+/* Divider */
+
+.letter-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  color: #ec4899;
+  margin-bottom: 35px;
+}
+
+.letter-divider span {
+  width: 65px;
+  height: 1px;
+  background: #f3a6cc;
+}
+
+/* Letter text */
+
+.letter-content {
+  color: #67445b;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.letter-content > h2:first-child {
+  color: #a13d79;
+  font-size: 21px;
+  margin-bottom: 22px;
+}
+
+.letter-content > p {
+  margin-bottom: 22px;
+  text-align: justify;
+}
+
+.letter-ending {
+  margin-top: 35px;
+}
+
+.letter-ending p {
+  margin-bottom: 8px;
+}
+
+.signature {
+  color: #c02679;
+  font-size: 26px;
+  font-family: cursive;
+}
+
+/* Bottom decoration */
+
+.letter-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid #f8d7e9;
+  color: #d94691;
+}
+
+.letter-bottom span {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+/* Floating decorations */
+
+.letter-decoration {
+  position: absolute;
+  color: rgba(217, 70, 145, 0.18);
+  pointer-events: none;
+}
+
+.decoration-one {
+  top: 15%;
+  left: 10%;
+  transform: rotate(-20deg);
+}
+
+.decoration-two {
+  right: 10%;
+  bottom: 15%;
+  transform: rotate(15deg);
+}
+
+/* Animation */
+
+@keyframes letterAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsive */
+
+@media (max-width: 600px) {
+  .letter-page {
+    padding: 35px 14px;
+  }
+
+  .letter-card {
+    padding: 35px 22px;
+    border-radius: 20px;
+  }
+
+  .letter-heading span {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .letter-content {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+
+  .letter-content > p {
+    text-align: left;
+  }
+
+  .letter-content > h2:first-child {
+    font-size: 19px;
+  }
+
+  .signature {
+    font-size: 23px;
+  }
+
+  .decoration-one {
+    left: 3%;
+  }
+
+  .decoration-two {
+    right: 3%;
+  }
+}
+
+/* =========================================
+   BIRTHDAY WISHES PAGE
+========================================= */
+
+.wishes-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 55px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 10% 20%, #fbcfe8, transparent 30%),
+    radial-gradient(circle at 90% 80%, #ddd6fe, transparent 30%),
+    linear-gradient(135deg, #fff1f8, #fce7f3, #f5eaff);
+}
+
+.wishes-container {
+  width: 100%;
+  max-width: 1050px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* Back button */
+
+.wishes-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 17px;
+  margin-bottom: 35px;
+  color: #93336f;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.wishes-back:hover {
+  transform: translateX(-5px);
+  background: white;
+}
+
+/* Header */
+
+.wishes-header {
+  max-width: 700px;
+  margin: 0 auto 45px;
+}
+
+.wishes-main-icon {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  color: white;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  box-shadow: 0 12px 30px rgba(217, 70, 145, 0.25);
+}
+
+.wishes-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #d94691;
+  margin-bottom: 15px;
+}
+
+.wishes-subtitle span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.wishes-header h1 {
+  color: #831843;
+  font-size: clamp(30px, 5vw, 48px);
+  margin-bottom: 18px;
+}
+
+.wishes-header h1 span {
+  color: #d94691;
+}
+
+.birthday-emoji {
+  display: inline-block;
+}
+
+.wishes-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #986080;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* Wish cards */
+
+.wish-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 40px;
+}
+
+.wish-card {
+  min-height: 220px;
+  padding: 30px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 15px 40px rgba(142, 57, 115, 0.09);
+  backdrop-filter: blur(12px);
+
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  animation: wishCardAppear 0.7s ease both;
+}
+
+.wish-card:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.wish-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.wish-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 22px 45px rgba(142, 57, 115, 0.16);
+}
+
+.wish-card-icon {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  color: white;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+}
+
+.wish-card h3 {
+  color: #831843;
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.wish-card p {
+  color: #986080;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Celebration button */
+
+.celebrate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 30px;
+
+  border: none;
+  border-radius: 50px;
+  color: white;
+  background: linear-gradient(135deg, #ec4899, #9333ea);
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow: 0 12px 30px rgba(190, 24, 93, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.celebrate-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 18px 35px rgba(190, 24, 93, 0.35);
+}
+
+.celebrate-btn:active {
+  transform: scale(0.97);
+}
+
+/* Surprise message */
+
+.surprise-message {
+  max-width: 600px;
+  margin: 35px auto 0;
+  padding: 35px 25px;
+
+  border: 1px solid white;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 15px 40px rgba(142, 57, 115, 0.12);
+
+  animation: surpriseAppear 0.7s ease both;
+}
+
+.surprise-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  border-radius: 50%;
+}
+
+.surprise-message h2 {
+  color: #be185d;
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
+.surprise-message p {
+  color: #986080;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.surprise-message h3 {
+  color: #93336f;
+  font-size: 17px;
+}
+
+.surprise-stars {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  color: #e9a23b;
+  margin-top: 22px;
+}
+
+/* Decorative elements */
+
+.wishes-decoration {
+  position: absolute;
+  color: rgba(217, 70, 145, 0.17);
+  pointer-events: none;
+}
+
+.wishes-decoration-one {
+  top: 12%;
+  left: 8%;
+  transform: rotate(-20deg);
+}
+
+.wishes-decoration-two {
+  right: 8%;
+  bottom: 12%;
+}
+
+/* Footer */
+
+.wishes-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #bd4b80;
+  font-size: 13px;
+  margin-top: 45px;
+}
+
+/* Animations */
+
+@keyframes wishCardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes surpriseAppear {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .wish-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wish-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 550px) {
+  .wishes-page {
+    padding: 30px 15px;
+  }
+
+  .wishes-back {
+    margin-bottom: 25px;
+  }
+
+  .wishes-header {
+    margin-bottom: 30px;
+  }
+
+  .wishes-subtitle span {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .wishes-description {
+    font-size: 14px;
+  }
+
+  .wish-cards {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .wish-card,
+  .wish-card:last-child {
+    grid-column: auto;
+    min-height: 180px;
+  }
+
+  .celebrate-btn {
+    width: 100%;
+    padding: 15px 12px;
+    font-size: 13px;
+  }
+
+  .surprise-message {
+    padding: 28px 18px;
+  }
+
+  .wishes-decoration-one {
+    left: 2%;
+  }
+
+  .wishes-decoration-two {
+    right: 2%;
+  }
+}
+
+/* ==============================
+   MEMORIES PAGE
+============================== */
+
+.memories-page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding: 90px 24px 50px;
+  background:
+    radial-gradient(circle at 10% 10%, #fce7f3 0, transparent 35%),
+    radial-gradient(circle at 90% 80%, #ede9fe 0, transparent 35%),
+    #fff8fc;
+  color: #4a2948;
+}
+
+.memories-header {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 55px;
+  position: relative;
+  z-index: 1;
+}
+
+.memories-main-icon {
+  color: #ec4899;
+  margin-bottom: 15px;
+}
+
+.memories-subtitle {
+  color: #c02680;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.memories-header h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  color: #9d2878;
+  margin-bottom: 15px;
+}
+
+.memories-description {
+  color: #80647c;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.memories-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #ec4899;
+  margin-top: 22px;
+}
+
+.memories-divider span {
+  width: 55px;
+  height: 1px;
+  background: #f3a6ce;
+}
+
+/* Gallery */
+
+.photo-gallery {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.photo-card {
+  background: white;
+  border: 1px solid #f9d5e9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(157, 40, 120, 0.09);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-card:hover {
+  transform: translateY(-9px);
+  box-shadow: 0 18px 35px rgba(157, 40, 120, 0.16);
+}
+
+.photo-image-wrapper {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  background: #fce7f3;
+}
+
+.photo-image-wrapper img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.photo-card:hover .photo-image-wrapper img {
+  transform: scale(1.07);
+}
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(80, 25, 70, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-card:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-overlay span {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+
+.photo-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.photo-info h3 {
+  color: #a83280;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.photo-info p {
+  color: #92778d;
+  font-size: 14px;
+}
+
+/* Decorations */
+
+.memories-decoration {
+  position: absolute;
+  color: #f5b5d6;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.memories-decoration-one {
+  top: 180px;
+  left: 6%;
+  transform: rotate(-20deg);
+}
+
+.memories-decoration-two {
+  bottom: 150px;
+  right: 7%;
+  font-size: 35px;
+}
+
+/* Footer */
+
+.memories-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #b56b9c;
+  margin-top: 55px;
+  font-size: 13px;
+}
+
+/* Photo lightbox */
+
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(30, 10, 30, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 80px 35px;
+  animation: modalFadeIn 0.25s ease;
+}
+
+.modal-photo-content {
+  max-width: 750px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-photo-content img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  max-height: 68vh;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+}
+
+.modal-photo-content h3 {
+  color: white;
+  margin-top: 18px;
+  font-size: 20px;
+}
+
+.modal-photo-content p {
+  color: #e9c9df;
+  margin-top: 7px;
+  font-size: 14px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  background: #ffffff20;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff20;
+  color: white;
+  border: 1px solid #ffffff50;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.gallery-arrow:hover,
+.close-modal:hover {
+  background: #ec4899;
+}
+
+.gallery-arrow.left {
+  left: 25px;
+}
+
+.gallery-arrow.right {
+  right: 25px;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+  .photo-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .photo-image-wrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 550px) {
+  .memories-page {
+    padding: 70px 16px 35px;
+  }
+
+  .memories-header {
+    margin-bottom: 35px;
+  }
+
+  .photo-gallery {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+
+  .photo-image-wrapper {
+    height: 260px;
+  }
+
+  .photo-modal {
+    padding: 65px 55px 25px;
+  }
+
+  .gallery-arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .gallery-arrow.left {
+    left: 8px;
+  }
+
+  .gallery-arrow.right {
+    right: 8px;
+  }
+
+  .close-modal {
+    top: 12px;
+    right: 12px;
+  }
+}
+
+/* ==============================
+   BIRTHDAY MUSIC PLAYER
+============================== */
+
+.music-player-redesigned {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  z-index: 5000;
+  width: min(420px, calc(100vw - 30px));
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 23px;
+  border: 1px solid #f5c5df;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #fffafd, #fce7f3);
+  color: #54264c;
+  box-shadow: 0 18px 55px rgba(120, 40, 100, 0.22);
+  animation: musicPlayerEnter 0.35s ease;
+}
+
+.music-player-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #f3d4e7;
+}
+
+.music-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.music-icon,
+.music-intro-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  color: white;
+}
+
+.music-heading h3 {
+  font-size: 16px;
+  color: #922c75;
+}
+
+.music-heading p {
+  font-size: 12px;
+  color: #98758f;
+  margin-top: 4px;
+}
+
+.music-close-btn {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  background: #fce7f3;
+  color: #a83280;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.music-close-btn:hover {
+  background: #fbcfe8;
+}
+
+.music-player-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 15px;
+  padding: 23px 0;
+}
+
+.music-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.music-intro h3 {
+  font-size: 15px;
+  color: #922c75;
+  margin-bottom: 7px;
+}
+
+.music-intro p {
+  font-size: 12px;
+  color: #80647c;
+  line-height: 1.6;
+}
+
+.music-intro span {
+  display: block;
+  font-size: 11px;
+  color: #c02680;
+  margin-top: 9px;
+}
+
+.music-track {
+  text-align: center;
+}
+
+.music-cover {
+  width: 125px;
+  height: 125px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  color: white;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  box-shadow: 0 10px 25px #d98ac455;
+  animation: coverGlow 3s ease-in-out infinite;
+}
+
+.music-track h4 {
+  font-size: 14px;
+  color: #922c75;
+}
+
+.music-track p {
+  font-size: 12px;
+  color: #98758f;
+  margin-top: 5px;
+}
+
+.music-progress {
+  margin-top: 5px;
+}
+
+.progress-slider,
+.music-volume input {
+  width: 100%;
+  accent-color: #db4298;
+  cursor: pointer;
+}
+
+.time-labels {
+  display: flex;
+  justify-content: space-between;
+  color: #98758f;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.music-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 20px 0;
+}
+
+.music-controls button {
+  border: none;
+  background: transparent;
+  color: #a83280;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.music-controls button:hover {
+  color: #ec4899;
+  transform: scale(1.08);
+}
+
+.music-controls .play-button {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  color: white;
+  box-shadow: 0 7px 18px #db429855;
+}
+
+.music-volume {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #a83280;
+  margin-bottom: 18px;
+}
+
+.music-volume input {
+  width: 100%;
+}
+
+.playlist-toggle {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #f2c5df;
+  border-radius: 13px;
+  background: white;
+  color: #a83280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.playlist-toggle:hover {
+  background: #fdf0f7;
+}
+
+.music-playlist {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.playlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  color: #80647c;
+  text-align: left;
+  cursor: pointer;
+}
+
+.playlist-item:hover,
+.playlist-item.active-song {
+  background: #fce7f3;
+  color: #a83280;
+}
+
+.playing-indicator {
+  color: #db4298;
+  font-size: 19px;
+}
+
+@keyframes musicPlayerEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes coverGlow {
+  0%, 100% {
+    box-shadow: 0 10px 25px #d98ac455;
+  }
+  50% {
+    box-shadow: 0 10px 35px #db429888;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-player-redesigned {
+    right: 15px;
+    bottom: 15px;
+    padding: 18px;
+  }
+
+  .music-player-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .music-cover {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Back to Home button */
+
+.memories-back {
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  z-index: 20;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 11px 18px;
+  border: 1px solid #f3c3df;
+  border-radius: 30px;
+
+  background: white;
+  color: #a83280;
+
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow: 0 5px 15px rgba(157, 40, 120, 0.08);
+  transition: all 0.3s ease;
+}
+
+.memories-back:hover {
+  background: #ec4899;
+  color: white;
+  transform: translateX(-4px);
+}
+
+@media (max-width: 550px) {
+  .memories-back {
+    top: 15px;
+    left: 15px;
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+
+  .memories-header {
+    padding-top: 35px;
+  }
+}
+
+/* ==============================
+   PASSWORD SCREEN
+============================== */
+
+.password-box {
+  width: min(420px, 90vw);
+  margin: 30px auto 0;
+  padding: 30px 25px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #f5c5df;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(160, 50, 120, 0.12);
+  animation: passwordAppear 0.5s ease;
+}
+
+.password-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  color: white;
+}
+
+.password-box h2 {
+  color: #a83280;
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.password-box > p {
+  color: #80647c;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.password-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #efb8d8;
+  border-radius: 13px;
+  background: white;
+  overflow: hidden;
+}
+
+.password-input-wrapper:focus-within {
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px #ec489920;
+}
+
+.password-input-wrapper input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #54264c;
+  font-size: 14px;
+}
+
+.password-visibility {
+  border: none;
+  background: transparent;
+  color: #c02680;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.unlock-btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.unlock-btn:hover {
+  transform: translateY(-3px);
+}
+
+.password-error {
+  color: #dc2626 !important;
+  font-size: 13px !important;
+  margin: 10px 0 0 !important;
+}
+
+.password-back {
+  margin-top: 16px;
+  border: none;
+  background: transparent;
+  color: #a83280;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.password-back:hover {
+  text-decoration: underline;
+}
+
+@keyframes passwordAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
